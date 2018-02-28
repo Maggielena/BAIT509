@@ -1,0 +1,86 @@
+#### BAIT 509 - In class exercise
+
+
+## exercise 1
+install.packages("tidyverse")
+install.packages("ISLR")
+install.packages("knitr")
+
+library(tibble)
+library(tidyverse)
+
+genreg <- function(n){
+  x1 <- rnorm(n)
+  x2 <- rnorm(n)
+  eps <- rnorm(n)
+  y <- 5-x1+2*x2+eps
+  tibble(x1=x1, x2=x2, y=y)
+}
+
+## eps: errors follows distribution 
+genreg(10)
+
+dat <- genreg(1000)
+dat <- mutate(dat,
+       yhat = 5,
+       yhat1= 5-x1,
+       yhat2 = 5+2*x2,
+       yhat12 = 5 - x1 + 2*x2)
+
+## mutate: takes data frame and adds column
+
+mse <- mean((dat$yhat - dat$y)^2)
+mse1 <- mean((dat$yhat1 - dat$y)^2)
+mse2 <- mean((dat$yhat2 - dat$y)^2)
+mse12 <- mean((dat$yhat12 - dat$y)^2)
+
+mse
+mse1
+mse2
+mse12
+
+## exercise 2
+gencla <- function(n) {
+  x <- rnorm(n) 
+  pB <- 0.8/(1+exp(-x))
+  y <- map_chr(pB, function(x) 
+    sample(LETTERS[1:3], size=1, replace=TRUE,
+           prob=c(0.2, x, 1-x)))
+  tibble(x=x, y=y)
+}
+
+gencla(10)
+
+gencla <- function(n) {
+  x <- rnorm(n) 
+  pB <- 0.8/(1+exp(-x))
+  y <- map_chr(pB, function(t) 
+    sample(LETTERS[1:3], size=1, replace=TRUE,
+           prob=c(0.2, t, 1-t-0.2)))
+  tibble(x=x, y=y)
+}
+## t is just a dummy variable to store value
+## sample: choose letters from A B and C
+(gencla(1000))
+
+(pB <- 0.8/(1+exp(-1)))
+(pA<- 0.2)
+(pC <- 1- pB- pA)
+
+
+(pB <- 0.8/(1+exp(2)))
+(pA<- 0.2)
+(pC <- 1- pB- pA)
+
+#if x<0, predict C; if x >0, predict B
+
+dat2 <-mutate(dat2,
+              yhat =sapply(x, function (x_)
+                if (x_<0) "C" else "B"))
+## ggplot2 
+
+mean(dat2$yhat == dat2$y)
+## correct for 1, incorrect for 0, count the ones that is correct
+1-mean(dat2$yhat == dat2$y)
+# count ones that are incorrect
+
