@@ -1,0 +1,76 @@
+### In classs exercise BAIT 509 CLASS 3
+install.packages("tidyverse")
+install.packages("knitr")
+
+library(tidyverse)
+library(knitr)
+
+set.seed(87)
+dat <- tibble(x = c(rnorm(100), rnorm(100)+5)-3,
+              y = sin(x^2/5)/x + rnorm(200)/10 + exp(1))
+kable(head(dat))
+
+### Question 1:
+## when x = 0, most of the points have their y values around 2.75
+plot (dat)
+## Question 2:
+
+## kNN
+
+dat2 <- tibble(x = c(rnorm(100), rnorm(100)+5)-3,
+         y = sin(x^2/5)/x + rnorm(200)/10 + exp(1),
+         d = abs(0-x))
+kable(head(dat2))
+
+dat3 <- arrange(dat2, d)
+
+dat4 <- dat3[1:5,]
+dat4
+
+y_predict <-mean(dat4$y)
+
+y_predict
+
+## Loess:
+dat_loess <-filter (dat2, d<1)
+dat_loess
+mean(dat_loess$y)
+
+## Question 3
+## what if r is really small, we cannot get any observation and thus we cannot
+## make prediction
+
+## Question 4:
+## decreasing the window size/number of K gives us more relevant observations
+## however, the number of observations might be too little
+## but if the window size/number of K is too big, the variance is too big
+
+### Exercise 2
+
+xgrid <- seq(-5, 4, length.out=1000)
+xgrid
+
+kNN_estimates <- map_dbl(xgrid, function(x){
+  dat$d <-abs(dat$x-x)
+  dat2 <- arrange(dat, d)
+  dat3 <- dat2[1:5,]
+  dat3
+  mean(dat3$y)
+})
+loess_estimates <- map_dbl(xgrid, function(x){
+  dat$d <-abs(dat$x-x)
+  dat2 <- arrange(dat, d)
+  dat_loess <- filter(dat2, d<1)
+  dat_loess
+  mean(dat_loess$y)
+})
+est <- tibble(x=xgrid, kNN=kNN_estimates, loess=loess_estimates) %>% 
+  gather(key="method", value="estimate", kNN, loess)
+ggplot() +
+  geom_point(data=dat, mapping=aes(x,y), colour="orange") +
+  geom_line(data=est, 
+            mapping=aes(x,estimate, group=method, colour= method)) +
+  theme_bw()
+
+loess_estimates
+kNN_estimates
