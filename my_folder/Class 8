@@ -1,0 +1,10 @@
+For (1) and (2) below, you're choosing between two candidates to hire. Discuss the pros and cons of choosing one candidate over the other in the following situations.
+
+1.	The variance of A is lower compared to B as the range of his or her productivity is smaller. Meaning that sometime B might outperform A,
+but sometimes might not. However, the probability of A being productive at a score of 75 is much higher compared to B based on density. 
+Thus, A should be hired as his or her performance is more stable. 
+2.	The productivity score of B is 80 while the productivity score of A is 60 and the variance of B is higher compared to that of A. 
+Although A's preformance is more stable, the best performance A can get is around 62. Even though sometimes B is not doing his best, i.e. getting
+70ish in productivity, he or she still outperforms A. Thus, B should be hired. In reality, it really depends on the job descriptions.
+3.	Our forecast has a response score of 0, however the test set indicates that the actual values tend to be around 2. 
+Thus, our model is very likely to be biased. We might want to reduce the tunning parameters. 
