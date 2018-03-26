@@ -1,0 +1,26 @@
+Construct the decision rule according to this classification boundary. How would you classify a new observation that has X1=6 and X2=10?
+The decision rule is based on the middle line. If X1 < 7.5, it is classified as A
+if X1 > 7.5, it is classified as B
+
+Thus, X1 = 6 and X2= 10 will be classifed as A
+
+What size is the margin here?
+Size of the margin is 2
+                  
+Which observations receive a penalty? Which observations are the support vectors?
+Observations 8, 9, 6, 10 and 7 will be receive penalty. They are also support vectors
+
+What is the total penalty here?
+6: +0.25
+7: +0.25
+8: +1.25
+9: +1.75
+10:+2.25
+Thus, the total is 5.75
+
+Can I choose a bigger margin if my total allowable penalty is 6?
+Yes. However, if we pick a margin that is close to 0, the penalty would be infinity. We need further calculation to find the optimal. 
+
+
+Are the data separable? If so, what are the support vectors?
+Yes.The support vectors are 4,8,9 and then expand the margin as much as you can until hit some observations.  
